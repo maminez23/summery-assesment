@@ -59,7 +59,10 @@ function reduce(array, f, acc) {
 //wordLengths("hello its me") // [5,3,2]
 
 function wordLengths(str) {
-    // TODO: your code here 
+    var arr = str.split(' ');
+    return map(arr, function(value, idx){
+        return value.length
+    })
 }
 
 //=============================================================================
@@ -72,7 +75,15 @@ function wordLengths(str) {
 // countOccurrences("hello, world!", "l"); // 3
 
 function countOccurrences(string, character) {
-    // your code is here
+    var arr = string.split('');
+    var occured = 0;
+    each(arr, function(value, idx){
+        if (value === character){
+          occured += 1;
+        }
+
+    })
+  return occured;
 }
 
 //=============================================================================
@@ -84,7 +95,10 @@ function countOccurrences(string, character) {
 // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
 
 function wordsLongerThanThree(str) {
-    // TODO: your code here 
+    var arr = str.split(' ');
+    return filter(arr, function(value){
+      return value.length > 3;
+    })
 }
 
 //=============================================================================
@@ -99,7 +113,10 @@ function wordsLongerThanThree(str) {
 //repeatString('dog', 3); // => 'dog' + 'dog' + 'dog' => 'dogdogdog'
 
 function repeatString(str, count) { 
- // TODO: your code here 
+     if(count === 0){
+       return ""
+     }
+     return str + repeatString(str, count - 1)
 } 
  
 
@@ -128,7 +145,48 @@ function repeatString(str, count) {
 // pizza.eatSlice();
 // pizza.eatSlice();
 
-// Write your code here .....
+function makePizza( crust ,size, numberOfSlice){
+    var th = crust;
+    var sz = size;
+    var slice = numberOfSlice;
+    var ingredients = [];
+    return {
+        addIngredients: function(ingredient){
+                    ingredients.push(ingredient)
+              },
+
+          displayIngredients: function(){
+              var str = "";
+              if(ingredients.length !== 0){
+              for (var i = 0; i < ingredients.length - 1; i++){
+                  str = str + ingredients[i] + " ";
+              }
+              return str + ingredients[ingredients.length - 1];
+              }
+              else{
+              return "you added no ingredients"
+              }
+
+         },
+
+         bakePizza: function(){
+             setTimeout(function(){
+               return "Your " + th + " " + size + " " + " " + slice +" pizza is done";
+             }, 2000)
+         },
+
+         eatSlice: function(){
+             if( slice > 0){
+                slice = slice - 1;
+             }
+             else{
+                 return "you have no more slice";
+             }
+
+         }
+
+    }
+}
 
 //=============================================================================
 /*                                  Q6                                      */
@@ -153,8 +211,43 @@ d- Decrement the number of "unread" books
 */
 
 // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
+// yes I am
 
-// Write your code here .....
+
+function ReadingList(currentBookName, unreadNumberOfBooks, ArrayOfToReadNamesOfBooks, finishedNumberOfBooks, ArrayOfNamesOfBooksFinishRead){
+
+   var currentBook = currentBookName;
+   var toReadBooks = ArrayOfToReadNamesOfBooks;
+   var unreadNumber = unreadNumberOfBooks;
+   var finishedBooks = finishedNumberOfBooks;
+   var ArrayOfBooksFinishRead = ArrayOfNamesOfBooksFinishRead;
+   var library = {};
+
+   library.currentRead = currentBook;
+   library.unRead = unreadNumber;
+   library.toRead = toReadBooks;
+   library.unreadNumber = unreadNumber;
+   library.read = finishedBooks;
+   library.readBooks = ArrayOfBooksFinishRead;
+   library.AddBook = add; //function
+   library.finishCurrentBook = fcb; // function
+
+   return library;
+}
+
+var add = function(Book){
+    this.toRead.push(Book);
+    this.unRead += 1;
+};
+
+var fcb = function(){
+  this.readBooks.push(this.currentRead);
+  this.read += 1;
+  this.currentRead = this.toRead[0];
+  this.unRead = this.unRead - 1;
+}
+
+
 
 //=============================================================================
 /*                                  Q7                                       */
@@ -174,7 +267,33 @@ d- Decrement the number of "unread" books
 //  safe('silver-bar','big') => "Can't fit"
 //  safe('money','small') => "watch gold-bar money"
 
-// Write your code here .....
+function makeSafe(StorageSizeLimit){
+var initial = StorageSizeLimit;
+return{
+    addItem : function(item, itemSize){
+      if (itemSize === "big"){
+        if(initial - 3 < 0){
+          return "Can't fit"
+        }
+        initial = initial - 3;
+      }
+      else if(itemSize === "medium"){
+        if(initial - 2 < 0){
+          return "Can't fit"
+        }
+        initial = initial - 2;
+      }
+      else{
+        if(initial - 1 < 0){
+            return "Can't fit"
+        }
+        initial = initial - 1;
+      }
+
+    }
+
+}
+}
 
 //=============================================================================
 /*                                  Q8                                       */
@@ -217,9 +336,15 @@ d- Decrement the number of "unread" books
 // Theoretical questions.
 // 1- In your own words,Why do we use Closures ?
 
+to create a class pattern
+
 // 2- In OOP, what does "this" refer to ?
 
+to the object before the dot
+
 // 3- What is jQuery?
+
+javascript Library
 
 // 4- what is the diffrence between Closure's methods and The OOP's methods?
 
